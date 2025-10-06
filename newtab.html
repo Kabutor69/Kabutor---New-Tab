@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kabutor - New Tab</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="terminal" id="terminal">
+      <div class="line">
+        <span class="prompt">[kabutor ~]#</span>
+        <span>date -d today</span>
+      </div>
+      <div id="date-time"><span id="date"></span>, <span id="time"></span></div>
+
+      <div class="line">
+        <span class="prompt">[kabutor ~]#</span>
+        <span>ls ~/sites</span>
+      </div>
+      <div id="sites">
+        <a href="https://github.com">Github</a>
+        <a href="https://youtube.com">Youtube</a>
+        <a href="https://chatgpt.com">Chatgpt</a>
+        <a href="https://anomy-teal.vercel.app">Anomy</a>
+        <a href="https://vercel.com">Vercel</a>
+        <a href="https://discord.com/app">Discord</a>
+        <a href="https://gemini.google.com/app">Gemini</a>
+        <a href="https://claude.ai/new">Claude</a>
+        <a
+          href="https://cloud.mongodb.com/v2/6810dc0868dac963184033b3#/overview"
+          >MongoDB</a
+        >
+      </div>
+
+      <div class="line">
+        <span class="prompt">[kabutor ~]#</span>
+        <div class="input">
+          <span id="typed"></span>
+          <span class="cursor"></span>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "Kabutor - New Tab",
+  "version": "1.0",
+  "description": "A custom new tab page with my own design.",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "icons": {
+    "128": "icon.png"
+  }
+}
+

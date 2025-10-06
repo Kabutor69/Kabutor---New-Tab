@@ -1,0 +1,84 @@
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1e1e1e;
+  font-family: monospace;
+  color: #b4b4b4;
+}
+
+.terminal {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 20px;
+  width: 80%;
+  max-width: 900px;
+  box-sizing: border-box;
+  font-size: 15px;
+  line-height: 1.4;
+  white-space: preserve-spaces;
+  overflow-wrap: break-word;
+  min-height: 70vh;
+  filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.5));
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.prompt {
+  margin-right: 5px;
+  color: #fff;
+}
+
+.input {
+  display: inline-flex;
+  align-items: center;
+  flex: 1;
+  min-width: 2ch;
+}
+
+.input span {
+  display: inline;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #eee;
+  margin-left: 2px;
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+a {
+  color: #b4b4b4;
+  text-decoration: none;
+  margin-right: 2em;
+}
+
+a:hover {
+  color: #fff;
+}
+
+#sites{
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+#sites , #date-time{
+  margin-left: 1em;
+}
