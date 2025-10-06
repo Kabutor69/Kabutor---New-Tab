@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "A custom new tab page with my own design.",
   "chrome_url_overrides": {
-    "newtab": "newtab.html"
+    "newtab": "index.html"
   },
   "icons": {
     "128": "icon.png"
