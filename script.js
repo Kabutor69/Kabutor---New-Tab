@@ -58,6 +58,86 @@ function clearCommandHistory() {
   commandOutput.innerHTML = "";
 }
 
+// Kabufetch - system info
+function showKabufetch() {
+  const commandOutput = document.getElementById("command-output");
+  const fetchDiv = document.createElement("div");
+  fetchDiv.className = "fetch-container";
+
+  const art = `                         +++==         
+                         **+++*%        
+                         **#+           
+                        *##*#           
+                      #*+**##           
+                    ------:*#           
+                  :----::----*          
+                %---:::-----=*          
+              *#+%##--------+           
+            @+-*#*:--%*--=+*            
+          ++=#*=:##+--=*#**             
+       #%####***+**%#-=                 
+      ##**@         %-                  
+    *@@             #%=++`;
+
+  const userAgent = navigator.userAgent;
+  let browser = "Unknown";
+  let os = "Unknown";
+
+  // Detect OS
+  if (userAgent.includes("Windows")) os = "Windows";
+  else if (userAgent.includes("Mac")) os = "macOS";
+  else if (userAgent.includes("Linux")) os = "Linux";
+  else if (userAgent.includes("Android")) os = "Android";
+  else if (userAgent.includes("iOS")) os = "iOS";
+
+  // Detect Browser
+  if (userAgent.includes("Firefox")) browser = "Firefox";
+  else if (userAgent.includes("Edg")) browser = "Edge";
+  else if (userAgent.includes("Chrome")) browser = "Chrome";
+  else if (userAgent.includes("Safari")) browser = "Safari";
+
+  const uptime = Math.floor(performance.now() / 1000);
+  const uptimeMin = Math.floor(uptime / 60);
+  const uptimeSec = uptime % 60;
+
+  const sites = loadSites();
+
+  fetchDiv.innerHTML = `
+          <div class="fetch-art">${art}</div>
+          <div class="fetch-info">
+            <div><span class="fetch-label">kabutor</span>@newtab</div>
+            <div class="fetch-separator">────────────────────────</div>
+            <div><span class="fetch-label">OS</span>           ${os}</div>
+            <div><span class="fetch-label">Browser</span>      ${browser}</div>
+            <div><span class="fetch-label">Resolution</span>   ${screen.width}x${screen.height}</div>
+            <div class="fetch-separator">────────────────────────</div>
+            <div><span class="fetch-label">Sites</span>        ${sites.length}</div>
+            <div><span class="fetch-label">Tabs</span>         <span id="tab-count">N/A</span></div>
+            <div><span class="fetch-label">Extensions</span>   <span id="ext-count">N/A</span></div>
+            <div><span class="fetch-label">Uptime</span>       ${uptimeMin}m ${uptimeSec}s</div>
+          </div>
+        `;
+
+  commandOutput.appendChild(fetchDiv);
+
+  // Try to get tab count (only works in extension context)
+  if (typeof chrome !== "undefined" && chrome.tabs) {
+    chrome.tabs.query({}, (tabs) => {
+      document.getElementById("tab-count").textContent = tabs.length;
+    });
+  }
+
+  // Try to get extension count (only works in extension context)
+  if (typeof chrome !== "undefined" && chrome.management) {
+    chrome.management.getAll((extensions) => {
+      const enabledExt = extensions.filter(
+        (ext) => ext.enabled && ext.type === "extension"
+      ).length;
+      document.getElementById("ext-count").textContent = enabledExt;
+    });
+  }
+}
+
 // Process commands
 function processCommand(command) {
   const parts = command.trim().split(/\s+/);
@@ -108,12 +188,16 @@ function processCommand(command) {
     addOutput(`rm: removed site '${name}'`, "success");
   } else if (cmd === "clear") {
     clearCommandHistory();
+  } else if (cmd === "kabufetch") {
+    addCommandLine(command);
+    showKabufetch();
   } else if (cmd === "help") {
     addCommandLine(command);
     addOutput("Available commands:");
     addOutput("  mkdir <url> <name>  - Add a new site");
     addOutput("  rm -rf <name>       - Remove a site");
     addOutput("  clear               - Clear command history");
+    addOutput("  kabufetch           - Show system info");
     addOutput("  help                - Show this help");
     addOutput("  Type any text and press Enter to search");
   } else if (command.trim()) {
@@ -193,7 +277,14 @@ document.addEventListener("keydown", (e) => {
     }
     return;
   }
-
+  // shift enter
+  if (e.key === "Enter" && e.shiftKey) {
+    e.preventDefault();
+    pushHistory();
+    redoStack.length = 0;
+    typed.textContent += "\n";
+    return;
+  }
   // enter
   if (e.key === "Enter") {
     const command = typed.textContent.trim();

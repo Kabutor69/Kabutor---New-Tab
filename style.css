@@ -18,7 +18,6 @@ body {
   box-sizing: border-box;
   font-size: 15px;
   line-height: 1.4;
-  /* white-space: preserve-spaces; */
   overflow-wrap: break-word;
   min-height: 70vh;
   max-height: 80vh;
@@ -40,7 +39,7 @@ body {
 
 .input {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   flex: 1;
   min-width: 2ch;
 }
@@ -52,11 +51,26 @@ body {
 }
 
 .cursor {
-  display: inline-block;
+  display: inline;
   width: 2px;
   height: 1em;
   background: #eee;
   margin-left: 2px;
+  animation: blink 1s step-start infinite;
+}
+
+#typed {
+  white-space: pre-wrap;
+  word-break: break-word;
+  position: relative;
+}
+
+#typed::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #eee;
   animation: blink 1s step-start infinite;
 }
 
@@ -79,7 +93,6 @@ a:hover {
 #sites {
   display: grid;
   grid-template-columns: auto auto auto;
-  min-height: 1.4em;
 }
 
 #sites,
@@ -104,4 +117,33 @@ a:hover {
 
 .command-history {
   margin-bottom: 5px;
+}
+
+.fetch-container {
+  margin-left: 1em;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 20px;
+}
+
+.fetch-art {
+  color: #51cf66;
+  line-height: 1.2;
+  white-space: pre;
+}
+
+.fetch-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fetch-label {
+  color: #51cf66;
+  font-weight: bold;
+}
+
+.fetch-separator {
+  color: #666;
+  margin: 3px 0;
 }
